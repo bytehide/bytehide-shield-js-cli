@@ -1,65 +1,79 @@
-# ByteHide Shield JavaScript CLI
+# ByteHide Shield JavaScript CLI (Legacy)
 
-A command-line interface for using ByteHide Shield's JavaScript obfuscation service.
+> **⚠️ Legacy Version for Node.js 12+**
+> 
+> This is the legacy version of ByteHide Shield CLI, compatible with Node.js 12 and newer versions.
+> 
+> - **If you have Node.js 14 or newer**: Use the modern version `@bytehide/shield-cli`
+> - **If you have Node.js 12-13**: Use this legacy version `@bytehide/shield-cli-legacy`
+
+A command-line interface for using ByteHide Shield's JavaScript obfuscation service, specifically designed for compatibility with older Node.js versions.
+
+## Version Compatibility
+
+| Node.js Version | Package to Install |
+|----------------|-------------------|
+| 14.16+ | `@bytehide/shield-cli` (modern version) |
+| 12.0 - 13.x | `@bytehide/shield-cli-legacy` (this package) |
 
 ## Installation
 
 ```bash
 # Install globally
-npm install -g @bytehide/shield-cli
+npm install -g @bytehide/shield-cli-legacy
 
 # Or install locally in your project
-npm install --save-dev @bytehide/shield-cli
+npm install --save-dev @bytehide/shield-cli-legacy
 ```
 
 ## Usage
 
 ```bash
 # Basic usage
-shield protect "src/**/*.js" --token YOUR_PROJECT_TOKEN
+shield-legacy protect "src/**/*.js" --token YOUR_PROJECT_TOKEN
 
 # Protect multiple patterns
-shield protect "src/main.js" "src/utils/*.js" --token YOUR_PROJECT_TOKEN
+shield-legacy protect "src/main.js" "src/utils/*.js" --token YOUR_PROJECT_TOKEN
 
 # Use a custom configuration file
-shield protect "src/**/*.js" --config ./shield.config.json
+shield-legacy protect "src/**/*.js" --config ./shield.config.json
 
 # Add an extension to obfuscated files
-shield protect "src/**/*.js" --output-ext ".obf"
+shield-legacy protect "src/**/*.js" --output-ext ".obf"
 
 # Specify output file for a single file
-shield protect "src/main.js" --output "dist/main.obfuscated.js"
+shield-legacy protect "src/main.js" --output "dist/main.obfuscated.js"
 
 # Specify output directory for multiple files
-shield protect "src/**/*.js" --output-dir "dist/obfuscated"
+shield-legacy protect "src/**/*.js" --output-dir "dist/obfuscated"
 
 # Generate source maps
-shield protect "src/**/*.js" --source-map
+shield-legacy protect "src/**/*.js" --source-map
 
 # Generate source maps with custom path (single file only)
-shield protect "src/main.js" --source-map --source-map-path "dist/maps/main.js.map"
+shield-legacy protect "src/main.js" --source-map --source-map-path "dist/maps/main.js.map"
 
 # Save identifier names cache (for consistent obfuscation)
-shield protect "src/**/*.js" --symbols
+shield-legacy protect "src/**/*.js" --symbols
 
 # Save symbols with custom path (single file only)
-shield protect "src/main.js" --symbols --symbols-path "dist/symbols/main.symbols.json"
+shield-legacy protect "src/main.js" --symbols --symbols-path "dist/symbols/main.symbols.json"
 
 # Create backups of original files
-shield protect "src/**/*.js" --backup
+shield-legacy protect "src/**/*.js" --backup
 
 # Explicitly disable backups
-shield protect "src/**/*.js" --no-backup
+shield-legacy protect "src/**/*.js" --no-backup
 
 # Dry run (preview which files would be obfuscated)
-shield protect "src/**/*.js" --dry-run
+shield-legacy protect "src/**/*.js" --dry-run
 
 # Display help
-shield --help
-shield protect --help
+shield-legacy --help
+shield-legacy protect --help
 
 # Display version
-shield --version
+shield-legacy --version
 ```
 
 ## Options
@@ -87,19 +101,19 @@ You can provide your ByteHide Shield project token in multiple ways (in order of
 
 1. Using the `--token` flag
    ```bash
-   shield protect "src/**/*.js" --token YOUR_PROJECT_TOKEN
+   shield-legacy protect "src/**/*.js" --token YOUR_PROJECT_TOKEN
    ```
 
 2. Setting the `BYTEHIDE_SHIELD_TOKEN` environment variable
    ```bash
    export BYTEHIDE_SHIELD_TOKEN=YOUR_PROJECT_TOKEN
-   shield protect "src/**/*.js"
+   shield-legacy protect "src/**/*.js"
    ```
 
 3. Setting the `BYTEHIDE_TOKEN` environment variable (backward compatibility)
    ```bash
    export BYTEHIDE_TOKEN=YOUR_PROJECT_TOKEN
-   shield protect "src/**/*.js"
+   shield-legacy protect "src/**/*.js"
    ```
 
 4. Adding it to your `shield.config.json` file
@@ -146,7 +160,7 @@ For a complete list of configuration options, see the [official ByteHide Shield 
 You can also use ByteHide Shield programmatically in your Node.js applications:
 
 ```javascript
-import { obfuscate } from '@bytehide/shield-cli';
+const { obfuscate } = require('@bytehide/shield-cli-legacy');
 
 const code = `function hello() { console.log("Hello world!"); }`;
 const token = 'YOUR_PROJECT_TOKEN';
@@ -175,7 +189,7 @@ console.log(result.symbols);     // Identifier names cache
 You can use the full API for more control:
 
 ```javascript
-import { obfuscateFile, loadConfig } from '@bytehide/shield-cli';
+const { obfuscateFile, loadConfig } = require('@bytehide/shield-cli-legacy');
 
 // Load config from file
 const config = await loadConfig('./shield.config.json');
@@ -198,13 +212,13 @@ await obfuscateFile({
 This package is published to npm under the `@bytehide` scope. To install it:
 
 ```bash
-npm install -g @bytehide/shield-cli
+npm install -g @bytehide/shield-cli-legacy
 ```
 
-After installation, you can use the `shield` command directly:
+After installation, you can use the `shield-legacy` command directly:
 
 ```bash
-shield protect "src/**/*.js"
+shield-legacy protect "src/**/*.js"
 ```
 
 ## Features

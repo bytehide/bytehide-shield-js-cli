@@ -15,8 +15,8 @@ const { version } = packageJson;
 const program = new Command();
 
 program
-  .name('shield')
-  .description('ByteHide Shield JavaScript obfuscation CLI')
+  .name('shield-legacy')
+  .description('ByteHide Shield JavaScript obfuscation CLI (Legacy - Node.js 12+)')
   .version(version, '-v, --version')
   .helpOption('-h, --help', 'Display help for command');
 
@@ -42,6 +42,6 @@ program.parse(process.argv);
 
 // Show help if no command is provided
 if (!process.argv.slice(2).length) {
-  console.log(chalk.cyan('\n🛡️  ByteHide Shield JavaScript CLI 🛡️\n'));
+  console.log(chalk.cyan('\n🛡️  ByteHide Shield JavaScript CLI (Legacy) 🛡️\n'));
   program.help();
 } 
