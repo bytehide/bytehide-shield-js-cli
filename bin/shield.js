@@ -1,14 +1,9 @@
 #!/usr/bin/env node
 
-// Archivo wrapper que asegura que se utilice la bandera experimental-json-modules
-import { spawn } from 'child_process';
-import { fileURLToPath } from 'url';
-import { dirname, resolve } from 'path';
-import { existsSync } from 'fs';
-
-// Obtener la ruta del directorio actual
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+// Archivo binario simplificado para CommonJS
+const { spawn } = require('child_process');
+const { resolve } = require('path');
+const { existsSync } = require('fs');
 
 // Ruta al CLI real
 const cliPath = resolve(__dirname, '../src/cli.js');
@@ -19,10 +14,10 @@ if (!existsSync(cliPath)) {
   process.exit(1);
 }
 
-// Ejecutar el CLI con la bandera experimental-json-modules
+// Ejecutar el CLI directamente (ya no necesitamos banderas experimentales)
 const childProcess = spawn(
   process.execPath, 
-  ['--experimental-json-modules', cliPath, ...process.argv.slice(2)],
+  [cliPath, ...process.argv.slice(2)],
   { stdio: 'inherit' }
 );
 

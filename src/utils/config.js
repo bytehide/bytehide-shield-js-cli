@@ -1,7 +1,7 @@
-import fs from 'fs/promises';
-import path from 'path';
-import { existsSync } from 'fs';
-import chalk from 'chalk';
+const fs = require('fs').promises;
+const path = require('path');
+const { existsSync } = require('fs');
+const chalk = require('chalk');
 
 // Default configuration for ByteHide Shield
 const DEFAULT_CONFIG = {
@@ -18,7 +18,7 @@ const DEFAULT_CONFIG_FILE = 'shield.config.json';
  * @param {string[]} directories - Directories to search for config file
  * @returns {string|null} - Path to the config file or null if not found
  */
-export function findConfigInDirectories(directories) {
+function findConfigInDirectories(directories) {
   // Remove duplicates and non-existent directories
   const uniqueDirs = [...new Set(directories)].filter(dir => existsSync(dir));
   
@@ -36,7 +36,7 @@ export function findConfigInDirectories(directories) {
  * Find the default config file in the current working directory
  * @returns {string|null} - Path to the config file or null if not found
  */
-export function findDefaultConfigFile() {
+function findDefaultConfigFile() {
   const defaultPath = path.join(process.cwd(), DEFAULT_CONFIG_FILE);
   if (existsSync(defaultPath)) {
     return defaultPath;
@@ -49,7 +49,7 @@ export function findDefaultConfigFile() {
  * @param {string[]} filePaths - List of file paths
  * @returns {string[]} - List of unique directories
  */
-export function getDirectoriesFromFiles(filePaths) {
+function getDirectoriesFromFiles(filePaths) {
   return [...new Set(filePaths.map(file => path.dirname(file)))];
 }
 
@@ -58,7 +58,7 @@ export function getDirectoriesFromFiles(filePaths) {
  * @param {Object} config - Configuration object
  * @returns {string|null} - Project token if found, null otherwise
  */
-export function extractTokenFromConfig(config) {
+function extractTokenFromConfig(config) {
   return config.ProjectToken || config.projectToken || null;
 }
 
@@ -68,7 +68,7 @@ export function extractTokenFromConfig(config) {
  * @param {Object} config - Configuration object
  * @returns {string|null} - Project token if found, null otherwise
  */
-export function getToken(cliToken, config) {
+function getToken(cliToken, config) {
   // Priority: CLI token > Environment variable > Config file
   if (cliToken) {
     return cliToken;
@@ -94,7 +94,7 @@ export function getToken(cliToken, config) {
  * @param {boolean} required - Whether config is required
  * @returns {Promise<string|null>} - Path to validated config file or null
  */
-export async function validateConfigRequirement(configPath, filePaths, required = false) {
+async function validateConfigRequirement(configPath, filePaths, required = false) {
   // If config path is provided and exists, return it
   if (configPath && existsSync(configPath)) {
     return configPath;
@@ -140,7 +140,7 @@ export async function validateConfigRequirement(configPath, filePaths, required 
  * @param {boolean} required - Whether config is required
  * @returns {Promise<Object>} - Configuration object
  */
-export async function loadConfig(configPath = null, filePaths = [], required = false) {
+async function loadConfig(configPath = null, filePaths = [], required = false) {
   // Validate and find config file
   const validatedConfigPath = await validateConfigRequirement(configPath, filePaths, required);
   
@@ -158,8 +158,8 @@ export async function loadConfig(configPath = null, filePaths = [], required = f
       config = JSON.parse(configContent);
     } else if (validatedConfigPath.endsWith('.js')) {
       // For .js files, we need to use dynamic import
-      const configModule = await import(path.resolve(validatedConfigPath));
-      config = configModule.default || configModule;
+      const configModule = require(path.resolve(validatedConfigPath));
+      config = configModule;
     } else {
       throw new Error('Configuration file must be either .json or .js');
     }
@@ -172,4 +172,14 @@ export async function loadConfig(configPath = null, filePaths = [], required = f
   } catch (error) {
     throw new Error(`Failed to load configuration: ${error.message}`);
   }
-} 
+}
+
+module.exports = {
+  findConfigInDirectories,
+  findDefaultConfigFile,
+  getDirectoriesFromFiles,
+  extractTokenFromConfig,
+  getToken,
+  validateConfigRequirement,
+  loadConfig
+}; 

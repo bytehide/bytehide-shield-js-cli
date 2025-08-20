@@ -1,7 +1,7 @@
-import https from 'https';
-import crypto from 'crypto';
-import path from 'path';
-import { readFile, writeFile } from './files.js';
+const https = require('https');
+const crypto = require('crypto');
+const path = require('path');
+const { readFile, writeFile } = require('./files.js');
 
 /**
  * Generates a unique random ID
@@ -50,7 +50,7 @@ function getFriendlyErrorMessage(statusCode) {
  * @param {string} token - ByteHide Shield project token
  * @returns {Promise<boolean>} - True if token is valid
  */
-export function validateToken(token) {
+function validateToken(token) {
   return new Promise((resolve, reject) => {
     const payload = JSON.stringify({
       code: '',
@@ -244,7 +244,7 @@ function getSymbolsPath(jsFilePath, customPath = null) {
  * @param {string} [options._code] - For internal use - code to obfuscate
  * @returns {Promise<string|Object>} - Path to the obfuscated file or obfuscation result
  */
-export async function obfuscateFile({ 
+async function obfuscateFile({ 
   filePath, 
   token, 
   config,
@@ -306,4 +306,9 @@ export async function obfuscateFile({
   }
   
   return finalOutputPath;
-} 
+}
+
+module.exports = {
+  validateToken,
+  obfuscateFile
+}; 

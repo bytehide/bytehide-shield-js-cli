@@ -1,13 +1,13 @@
-import fs from 'fs/promises';
-import { existsSync } from 'fs';
-import path from 'path';
+const fs = require('fs').promises;
+const { existsSync } = require('fs');
+const path = require('path');
 
 /**
  * Check if a file exists
  * @param {string} filePath - Path to the file
  * @returns {boolean} - True if the file exists
  */
-export function fileExists(filePath) {
+function fileExists(filePath) {
   return existsSync(filePath);
 }
 
@@ -16,7 +16,7 @@ export function fileExists(filePath) {
  * @param {string} filePath - Path to the file
  * @returns {Promise<string>} - Path to the backup file
  */
-export async function createBackup(filePath) {
+async function createBackup(filePath) {
   const backupPath = `${filePath}.backup`;
   await fs.copyFile(filePath, backupPath);
   return backupPath;
@@ -27,7 +27,7 @@ export async function createBackup(filePath) {
  * @param {string} filePath - Path to the file
  * @returns {Promise<string>} - File content
  */
-export async function readFile(filePath) {
+async function readFile(filePath) {
   return fs.readFile(filePath, 'utf-8');
 }
 
@@ -37,7 +37,7 @@ export async function readFile(filePath) {
  * @param {string|Buffer} content - Content to write (string or Buffer)
  * @returns {Promise<void>}
  */
-export async function writeFile(filePath, content) {
+async function writeFile(filePath, content) {
   const dir = path.dirname(filePath);
   
   // Ensure directory exists
@@ -52,4 +52,11 @@ export async function writeFile(filePath, content) {
   
   // Otherwise write the buffer directly
   return fs.writeFile(filePath, content);
-} 
+}
+
+module.exports = {
+  fileExists,
+  createBackup,
+  readFile,
+  writeFile
+}; 

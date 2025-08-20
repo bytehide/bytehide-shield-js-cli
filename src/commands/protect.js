@@ -1,16 +1,16 @@
-import { glob } from 'glob';
-import chalk from 'chalk';
-import ora from 'ora';
-import path from 'path';
-import fs from 'fs/promises';
-import { existsSync } from 'fs';
-import { loadConfig, getToken } from '../utils/config.js';
-import { obfuscateFile, validateToken } from '../utils/obfuscate.js';
-import { fileExists, createBackup } from '../utils/files.js';
-import logSymbols from 'log-symbols';
-import boxen from 'boxen';
-import cliProgress from 'cli-progress';
-import gradient from 'gradient-string';
+const glob = require('glob');
+const chalk = require('chalk');
+const ora = require('ora');
+const path = require('path');
+const fs = require('fs').promises;
+const { existsSync } = require('fs');
+const { loadConfig, getToken } = require('../utils/config.js');
+const { obfuscateFile, validateToken } = require('../utils/obfuscate.js');
+const { fileExists, createBackup } = require('../utils/files.js');
+const logSymbols = require('log-symbols');
+const boxen = require('boxen');
+const cliProgress = require('cli-progress');
+const gradient = require('gradient-string');
 
 // Create a purple gradient for the title
 const purpleGradient = gradient('#8A2BE2', '#9370DB', '#9400D3', '#800080');
@@ -99,7 +99,7 @@ function getOutputPath(inputFile, options) {
   return inputFile.replace(ext, `${options.outputExt}${ext}`);
 }
 
-export async function protect(patterns, options) {
+async function protect(patterns, options) {
   // Display a nice header
   console.log(createHeader('ByteHide Shield JavaScript Protector'));
   
@@ -109,7 +109,7 @@ export async function protect(patterns, options) {
   
   try {
     for (const pattern of patterns) {
-      const files = await glob(pattern, { nodir: true });
+      const files = glob.sync(pattern, { nodir: true });
       allFiles = [...allFiles, ...files];
     }
     
@@ -297,7 +297,9 @@ export async function protect(patterns, options) {
     
   } catch (error) {
     if (fileSpinner.isSpinning) fileSpinner.fail(chalk.red(`${logSymbols.error} Error: ${error.message}`));
-    else console.error(chalk.red(`${logSymbols.error} Error: ${error.message}`));
+    else     console.error(chalk.red(`${logSymbols.error} Error: ${error.message}`));
     process.exit(1);
   }
-} 
+}
+
+module.exports = { protect }; 

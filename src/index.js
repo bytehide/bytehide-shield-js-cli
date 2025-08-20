@@ -1,6 +1,6 @@
 // Export main functionalities for programmatic usage
-import { obfuscateFile } from './utils/obfuscate.js';
-import { 
+const { obfuscateFile } = require('./utils/obfuscate.js');
+const { 
   loadConfig, 
   getToken, 
   findDefaultConfigFile, 
@@ -8,10 +8,10 @@ import {
   findConfigInDirectories,
   getDirectoriesFromFiles,
   validateConfigRequirement
-} from './utils/config.js';
-import { fileExists, createBackup, readFile, writeFile } from './utils/files.js';
+} = require('./utils/config.js');
+const { fileExists, createBackup, readFile, writeFile } = require('./utils/files.js');
 
-export {
+module.exports = {
   obfuscateFile,
   loadConfig,
   getToken,
@@ -23,7 +23,8 @@ export {
   fileExists,
   createBackup,
   readFile,
-  writeFile
+  writeFile,
+  obfuscate
 };
 
 /**
@@ -36,7 +37,7 @@ export {
  * @param {boolean} [options.includeSymbols] - Whether to include symbols in result
  * @returns {Promise<string|Object>} - Obfuscated code or full result object
  */
-export async function obfuscate(code, token, config = {}, options = {}) {
+async function obfuscate(code, token, config = {}, options = {}) {
   if (!code || typeof code !== 'string') {
     throw new Error('Code must be a non-empty string');
   }

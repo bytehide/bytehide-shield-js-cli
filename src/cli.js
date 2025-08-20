@@ -1,15 +1,10 @@
 #!/usr/bin/env node
 
-import { Command } from 'commander';
-import chalk from 'chalk';
-import { protect } from './commands/protect.js';
-import { readFileSync } from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname, resolve } from 'path';
-
-// Obtener la ruta del directorio actual
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const { Command } = require('commander');
+const chalk = require('chalk');
+const { protect } = require('./commands/protect.js');
+const { readFileSync } = require('fs');
+const { resolve } = require('path');
 
 // Leer el package.json directamente
 const packageJson = JSON.parse(
