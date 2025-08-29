@@ -34,7 +34,7 @@ function getFriendlyErrorMessage(statusCode) {
     case 404:
       return 'Authentication error. Verify that your project token is valid. For more information visit: docs.bytehide.com/platforms/javascript/products/shield/configuration-project-token';
     case 429:
-      return 'You have exceeded the allowed request limit. Try again later.';
+      return 'Protection skipped to avoid performance issues in final build. Reducing file size...';
     case 500:
     case 502:
     case 503:
