@@ -1,6 +1,6 @@
 {
   "name": "@bytehide/shield-cli-legacy",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "ByteHide Shield JavaScript obfuscation CLI (Node.js 12+ compatible)",
   "main": "src/index.js",
   "bin": {
