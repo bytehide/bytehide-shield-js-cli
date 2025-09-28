@@ -5,9 +5,9 @@ const chalk = require('chalk');
 
 // Default configuration for ByteHide Shield
 const DEFAULT_CONFIG = {
-  controlFlowFlattening: true,
+  controlFlowFlattening: false,
   debugProtection: false,
-  devtoolsBlocking: true
+  devtoolsBlocking: false
 };
 
 // Default config file name
