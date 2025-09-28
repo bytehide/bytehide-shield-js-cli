@@ -1,6 +1,6 @@
 {
   "name": "@bytehide/shield-cli",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "ByteHide Shield JavaScript obfuscation CLI",
   "main": "src/index.js",
   "bin": {
